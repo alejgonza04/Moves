@@ -1,4 +1,5 @@
 Commands:
   python -m venv venv        Makes virtual enviorment
   venv\Scripts\activate      Activate virtual enviorment
+  set FLASK_APP=[name].py    Makes app
   
