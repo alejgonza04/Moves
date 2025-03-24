@@ -3,35 +3,27 @@
     flex-direction: column;
     margin: auto;
     margin-top: 200px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.30);
     width: 600px;
     padding-bottom: 30px;
+    border-radius: 50px;
 }
 
 .header{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 9px;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
-.text {
-    color: #00A8E1;
-    font-size: 48px;
-    font-weight: 700;
-}
-
-.underline{
-    width: 61px;
-    height: 6px;
-    background: #00A8E1;
-    border-radius: 9px;
+.logo {
+    width: 500px;
+    height: auto;
 }
 
 .inputs{
-    margin-top: 55px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -44,9 +36,9 @@
     width: 480px;
     height: 80px;
     background: #eaeaea;
-    border-radius: 6px;
-}
+    border-radius: 20px;
 
+}
 
 .input input{
     margin: 0px 30px;
@@ -67,7 +59,7 @@
 }
 
 .forgot-password span{
-    color: #4c00b4;
+    color: #0074ff;
     cursor: pointer;
 }
 
@@ -84,9 +76,14 @@
     width: 220px;
     height: 59px;
     color: #fff;
-    background: #00A8E1;
+    background: #0074ff;
     border-radius: 50px;
     font-size: 19px;
     font-weight: 700;
     cursor: pointer;
+}
+
+.gray{
+    background: #EAEAEA;
+    color: #676767;
 }
