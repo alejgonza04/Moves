@@ -1,1 +1,4 @@
-
+Commands:
+  python -m venv venv        Makes virtual enviorment
+  venv\Scripts\activate      Activate virtual enviorment
+  
