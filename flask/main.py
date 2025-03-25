@@ -10,6 +10,7 @@ def hello_world():
 def signupMethod():
     if request.method == 'OPTIONS':
         return '', 204
+    #Gets all the json data from frontend, used like a map: name["item"]
     data = request.get_json()
     print("Received data:", data["username"], data["password"])
     return '', 200
