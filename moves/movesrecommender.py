@@ -82,5 +82,7 @@ def recommend(business_name, city=None, rating_threshold = 3.0):
 
 recommend('Biscuits Cafe', city='Tampa')
 
+joblib.dump((businesses, cv, similarity), 'recommender_model.joblib', compress=3)
+
 with open("movierecommender.pkl", "wb") as f:
     pickle.dump((businesses, cv, similarity), f)
