@@ -1,6 +1,8 @@
 import pandas as pd
+import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import joblib
 
 business = pd.read_json('moves\yelp_academic_dataset_business.json', lines=True)
 
@@ -80,3 +82,9 @@ def recommend(business_name, city=None, rating_threshold = 3.0):
     seen.add(business_id)
 
 recommend('Biscuits Cafe', city='Tampa')
+
+joblib.dump((businesses, cv, similarity), 'recommender_model.joblib', compress=3)
+
+
+with open("movierecommender.pkl", "wb") as f:
+    pickle.dump((businesses, cv, similarity), f)
