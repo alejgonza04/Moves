@@ -1,38 +1,62 @@
-import React, {useState} from 'react'
-import './LoginSignup.css'
-
-// Import Images from Assets such as app icon, username icon, email icon, password icon //
-import title from '../Assets/logo.png'
+import React, { useState } from 'react';
+import './LoginSignup.css';
+import title from '../Assets/logo.png';
 
 const LoginSignup = () => {
+  const [action, setAction] = useState("Login");
 
-  // Utilize this video as a resources to create login page:
-  const [action,setAction] = useState("Login");
+  const handleSubmit = () => {
+    if (action === "Login") {
+      console.log("Logging in...");
+      // TODO: Call login API or function here
+    } else {
+      console.log("Signing up...");
+      // TODO: Call signup API or function here
+    }
+  };
+
   return (
     <div className='container'>
       <div className='header'>
-        <img src={title} alt="App Logo" className='logo'/>
+        <img src={title} alt="App Logo" className='logo' />
         <div className='underline'></div>
-        </div>
+      </div>
+
       <div className='inputs'>
-        {action==="Login"?<div></div>: <div className='input'>
-          <input type='text' placeholder='Name'/>
-        </div>}
+        {action === "Login" ? null : (
+          <div className='input'>
+            <input type='text' placeholder='Name' />
+          </div>
+        )}
         <div className='input'>
-          <input type='email' placeholder='Email'/>
+          <input type='email' placeholder='Email' />
         </div>
         <div className='input'>
-          <input type='password' placeholder='Password'/>
+          <input type='password' placeholder='Password' />
         </div>
       </div>
-      {action==="Sign Up"?<div></div>:  <div className="forgot-password">Lost Password? <span>Click Here!</span></div>}
+
+      {action === "Sign Up" ? null : (
+        <div className="forgot-password">
+          Lost Password? <span>Click Here!</span>
+        </div>
+      )}
+
       <div className="submit-container">
-        <div className={action==="Login"?"submit gray":"submit"} onClick={()=>{setAction("Sign Up")}}>Sign Up</div>
-        <div className={action==="Sign Up"?"submit gray":"submit"} onClick={()=>{setAction("Login")}}>Login</div>
+        <div className={action === "Login" ? "submit gray" : "submit"} onClick={() => setAction("Sign Up")}>
+          Sign Up
+        </div>
+        <div className={action === "Sign Up" ? "submit gray" : "submit"} onClick={() => setAction("Login")}>
+          Login
+        </div>
+      </div>
+
+      {/* ✅ Submit button here */}
+      <div className="submit submit-main" onClick={handleSubmit}>
+        Submit
       </div>
     </div>
-      
   );
 };
 
-export default LoginSignup
+export default LoginSignup;
