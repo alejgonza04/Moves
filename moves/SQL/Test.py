@@ -1,21 +1,30 @@
-import mysql.connector
-from Login import *
+from Login import getDatabaseForAccountTable, testLogin, createAccount
 
+# Attempt to connect to the database
 cnx = getDatabaseForAccountTable("root", "1qaz@WSX3edc")
+
+# If connection fails, don't continue
+if cnx is None:
+    print("Cannot run tests: Database connection failed")
+    exit(1)
+
+# First login attempt (should fail if user doesn't exist)
 cnx, check = testLogin(cnx, "a", "b@c.com", "d")
 if check:
-    print("login success")
+    print("Login success (existing user)")
 else:
-    print("login failure")
+    print("Login failed (user not found yet)")
 
-cnx, check =  createAccount(cnx, "a", "b@c.com", "d")
+# Attempt to create the user
+cnx, check = createAccount(cnx, "a", "b@c.com", "d")
 if check:
-    print("creation success")
+    print("Account creation success")
 else:
-    print("creation failure")
+    print("Account creation failed")
 
+# Second login attempt (should succeed now)
 cnx, check = testLogin(cnx, "a", "b@c.com", "d")
 if check:
-    print("login success")
+    print("Login success after account creation")
 else:
-    print("login failure")
+    print("Login failed after account creation")

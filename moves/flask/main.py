@@ -52,6 +52,7 @@ def signupMethod():
     print("Received data:", data["username"], data["email"], data["password"])
 
     db = getDatabaseForAccountTable("root", "1qaz@WSX3edc")
+    print(db)
     if db is None:
         return jsonify({"message": "Database connection failed."}), 500
 
@@ -61,6 +62,26 @@ def signupMethod():
         return jsonify({"message": "Account created!"}), 201
     else:
         return jsonify({"message": "Account creation failed."}), 400
+    
+@app.route("/login", methods=["POST", "OPTIONS"])
+def loginMethod():
+    if request.method == 'OPTIONS':
+        return '', 204
+
+    data = request.get_json()
+    print("Login attempt:", data["username"], data["email"], data["password"])
+
+    db = getDatabaseForAccountTable("root", "1qaz@WSX3edc")
+    if db is None:
+        return jsonify({"message": "Database connection failed."}), 500
+
+    _, success = testLogin(db, data["username"], data["email"], data["password"])
+
+    if success:
+        return jsonify({"message": "Login successful!"}), 200
+    else:
+        return jsonify({"message": "Invalid login credentials."}), 401
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
