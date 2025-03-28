@@ -21,7 +21,7 @@ def testLogin(database, username, email, password):
     cursor.execute(
             'SELECT * FROM account WHERE username = %s \
             AND email = %s \
-            AND password = %s', (username, email, password, ))
+            AND password = AES_ENCRYPT(%s, "temp")', (username, email, password, ))
     account = cursor.fetchone()
     if account:
         return database, True
@@ -42,7 +42,7 @@ def createAccount(database, username, email, password):
     else:
         cursor.execute('INSERT INTO account'
                        '(username, email, password)'
-                       'VALUES (%s, %s, %s)',
+                       'VALUES (%s, %s, AES_ENCRYPT(%s, "temp"))',
                        (username, email, password, ))
         database.commit()
         return database, True
