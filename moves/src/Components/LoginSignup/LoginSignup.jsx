@@ -4,14 +4,37 @@ import title from '../Assets/logo.png';
 
 const LoginSignup = () => {
   const [action, setAction] = useState("Login");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {
-    if (action === "Login") {
-      console.log("Logging in...");
-      // TODO: Call login API or function here
-    } else {
+  const handleSubmit = async () => {
+    if (action === "Sign Up") {
       console.log("Signing up...");
-      // TODO: Call signup API or function here
+
+      try {
+        const res = await fetch("http://127.0.0.1:5555/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            username: name,
+            email: email,
+            password: password
+          })
+        });
+
+        const data = await res.json();
+        console.log("Signup response:", data.message);
+        alert(data.message);
+      } catch (err) {
+        console.error("Signup failed:", err);
+        alert("Signup failed. Please try again.");
+      }
+    } else {
+      console.log("Logging in...");
+      // TODO: Add login functionality here
     }
   };
 
@@ -25,14 +48,29 @@ const LoginSignup = () => {
       <div className='inputs'>
         {action === "Login" ? null : (
           <div className='input'>
-            <input type='text' placeholder='Name' />
+            <input
+              type='text'
+              placeholder='Name'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
         )}
         <div className='input'>
-          <input type='email' placeholder='Email' />
+          <input
+            type='email'
+            placeholder='Email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div className='input'>
-          <input type='password' placeholder='Password' />
+          <input
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
       </div>
 
@@ -43,15 +81,20 @@ const LoginSignup = () => {
       )}
 
       <div className="submit-container">
-        <div className={action === "Login" ? "submit gray" : "submit"} onClick={() => setAction("Sign Up")}>
+        <div
+          className={action === "Login" ? "submit gray" : "submit"}
+          onClick={() => setAction("Sign Up")}
+        >
           Sign Up
         </div>
-        <div className={action === "Sign Up" ? "submit gray" : "submit"} onClick={() => setAction("Login")}>
+        <div
+          className={action === "Sign Up" ? "submit gray" : "submit"}
+          onClick={() => setAction("Login")}
+        >
           Login
         </div>
       </div>
 
-      {/* ✅ Submit button here */}
       <div className="submit submit-main" onClick={handleSubmit}>
         Submit
       </div>
