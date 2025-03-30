@@ -8,6 +8,7 @@ def getDatabaseForAccountTable(usernameinput, passwordinput):
             user=usernameinput,
             password=passwordinput,
             host='127.0.0.1',
+            port=3307,
             database='movesprofile'
         )
         print("got cursor")
@@ -21,17 +22,16 @@ def getDatabaseForAccountTable(usernameinput, passwordinput):
             print(err)
         return None  # <-- Add this line!
 
-def testLogin(database, username, email, password):
+def testLogin(database, email, password):
     cursor = database.cursor()
     cursor.execute(
-            'SELECT * FROM account WHERE username = %s \
-            AND email = %s \
-            AND password = %s', (username, email, password, ))
+        'SELECT * FROM account WHERE email = %s AND password = %s',
+        (email, password,)
+    )
     account = cursor.fetchone()
-    if account:
-        return database, True
-    else:
-        return database, False
+    cursor.close()
+    return database, account is not None
+
 
 def createAccount(database, username, email, password):
     cursor = database.cursor()
