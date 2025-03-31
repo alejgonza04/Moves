@@ -101,14 +101,4 @@ const LoginSignup = ({ onLoginSuccess = () => {} }) => {
           >
             Login
           </div>
-        </div>
-
-        <div className="submit submit-main" onClick={handleSubmit}>
-          Submit
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default LoginSignup;
+        </

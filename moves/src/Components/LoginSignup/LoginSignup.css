@@ -87,16 +87,4 @@
     background: #0074ff;
     border-radius: 50px;
     font-size: 19px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.gray{
-    background: #EAEAEA;
-    color: #676767;
-}
-
-.submit-main {
-    width: 220px;
-    margin: 0 auto 0 auto;
-}
+ 

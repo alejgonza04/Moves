@@ -70,9 +70,48 @@ function Homepage() {
             </TinderCard>
           ))}
         </div>
+        <Footer/>
       </div>
     )
 }
+
+function Footer(){
+  return (
+    <div style={{
+      display:'flex',
+      justifyContent: 'space-evenly',
+      marginTop: '580px', // space from the card
+    }}>
+      <img src="https://img.icons8.com/nolan/50/multiply.png" alt="" style={{
+        backgroundColor: 'white',
+        height: '60px',
+        width: '60px',
+        borderRadius: '50%', 
+        padding: '10px',
+        boxShadow: '1px 5px 11px 0px rgba(0,0,0,0.3)'
+        }}/>
+      <img src="https://img.icons8.com/material-outlined/24/808080/ address.png" alt="" style={{
+        backgroundColor: 'white',
+        height: '60px',
+        width: '60px',
+        borderRadius: '50%', 
+        padding: '10px',
+        boxShadow: '1px 5px 11px 0px rgba(0,0,0,0.3)'
+        }}
+      />
+      <img src="https://img.icons8.com/color/48/000000/diamond-heart--v1.png" alt ="" style={{
+        backgroundColor: 'white',
+        height: '60px',
+        width: '60px',
+        borderRadius: '50%', 
+        padding: '10px',
+        boxShadow: '1px 5px 11px 0px rgba(0,0,0,0.3)'
+        }}
+      />
+    </div>
+  )
+}
+
   
 
 
