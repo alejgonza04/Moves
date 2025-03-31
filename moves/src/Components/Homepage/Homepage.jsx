@@ -34,7 +34,6 @@ function Homepage() {
             <img src="https://img.icons8.com/ios-glyphs/60/
             000000/login-rounded-right--v1.png" alt="" className="login"/>
         </div>
-
         <Card/>
     </div>
 
@@ -44,38 +43,35 @@ function Homepage() {
 
  function Card() {
     return (
-      <div className="cardbox">
-        {users.map((data) => (
-          <TinderCard
-            className="tinderCard"
-            key={data.name}
-            preventSwipe={["up", "down"]}
-          >
-            <div
-              className="carddetails"
-              style={{
-                backgroundImage: `url(${data.imgUrl})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                width: "300px",
-                height: "400px",
-                borderRadius: "20px",
-                color: "white",
-                display: "flex",
-                alignItems: "flex-end",
-                padding: "20px",
-                boxShadow: "0 10px 20px rgba(0,0,0,0.3)"
-              }}
+      <div className="card">
+        <div className='heading'>
+          <h1>Discover</h1>
+          <div className='subheading'>
+            <img src='https://img.icons8.com/material-outlined/24/808080/ address.png' alt="" className='location' />
+            Berlin, Germany
+          </div>
+        </div>
+        <div className="cardbox">
+          {users.map((data) => (
+            <TinderCard
+              className="tindercard"
+              key={data.name}
+              preventSwipe={["up", "down"]}
             >
-              <div className="userdetails">
-                <h3>{data.name}, {data.age}</h3>
-                <h6>{data.work}</h6>
+              <div
+                className="carddetails"
+                style={{
+                  backgroundImage: `url(${data.imgUrl})`}}>
+                <div className="userdetails">
+                  <h3>{data.name}, {data.age}</h3>
+                  <h6>{data.work}</h6>
+                </div>
               </div>
-            </div>
-          </TinderCard>
-        ))}
+            </TinderCard>
+          ))}
+        </div>
       </div>
-    );
+    )
 }
   
 
