@@ -15,3 +15,7 @@ function App() {
         <Homepage />
       ) : (
         <LoginSignup onLoginSuccess={() => setLoggedIn(true)} />
+      )} */
+  );
+}
+export default App;
