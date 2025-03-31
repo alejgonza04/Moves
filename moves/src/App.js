@@ -1,6 +1,8 @@
 import React from "react";
 // import LoginSignup from "./Components/LoginSignup/LoginSignup";
-import CloudAI from "./Components/CloudAI/CloudAI";
+// import CloudAI from "./Components/CloudAI/CloudAI";
+//import CloudAI from "./Components/Homepage/Homepage";
+import Homepage from "./Components/Homepage/Homepage";
 
 function App() {
   // const [loggedIn, setLoggedIn] = useState(false);
@@ -12,7 +14,7 @@ function App() {
       ) : (
         <LoginSignup onLoginSuccess={() => setLoggedIn(true)} />
       )} */}
-      <CloudAI />
+      <Homepage />
     </div>
   );
 }
