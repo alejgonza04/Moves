@@ -46,64 +46,66 @@ const LoginSignup = ({ onLoginSuccess = () => {} }) => {
   };
 
   return (
-    <div className='container'>
-      <div className='header'>
-        <img src={title} alt="App Logo" className='logo' />
-        <div className='underline'></div>
-      </div>
+    <div className='login-page-background'>
+      <div className='container'>
+        <div className='header'>
+          <img src={title} alt="App Logo" className='logo' />
+          <div className='underline'></div>
+        </div>
 
-      <div className='inputs'>
-        {action === "Sign Up" && (
+        <div className='inputs'>
+          {action === "Sign Up" && (
+            <div className='input'>
+              <input
+                type='text'
+                placeholder='Name'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+          )}
           <div className='input'>
             <input
-              type='text'
-              placeholder='Name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              type='email'
+              placeholder='Email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+          <div className='input'>
+            <input
+              type='password'
+              placeholder='Password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {action === "Login" && (
+          <div className="forgot-password">
+            Lost Password? <span>Click Here!</span>
+          </div>
         )}
-        <div className='input'>
-          <input
-            type='email'
-            placeholder='Email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className='input'>
-          <input
-            type='password'
-            placeholder='Password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-      </div>
 
-      {action === "Login" && (
-        <div className="forgot-password">
-          Lost Password? <span>Click Here!</span>
+        <div className="submit-container">
+          <div
+            className={action === "Login" ? "submit gray" : "submit"}
+            onClick={() => setAction("Sign Up")}
+          >
+            Sign Up
+          </div>
+          <div
+            className={action === "Sign Up" ? "submit gray" : "submit"}
+            onClick={() => setAction("Login")}
+          >
+            Login
+          </div>
         </div>
-      )}
 
-      <div className="submit-container">
-        <div
-          className={action === "Login" ? "submit gray" : "submit"}
-          onClick={() => setAction("Sign Up")}
-        >
-          Sign Up
+        <div className="submit submit-main" onClick={handleSubmit}>
+          Submit
         </div>
-        <div
-          className={action === "Sign Up" ? "submit gray" : "submit"}
-          onClick={() => setAction("Login")}
-        >
-          Login
-        </div>
-      </div>
-
-      <div className="submit submit-main" onClick={handleSubmit}>
-        Submit
       </div>
     </div>
   );

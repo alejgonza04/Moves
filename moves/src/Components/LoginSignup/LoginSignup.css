@@ -1,8 +1,16 @@
+.login-page-background {
+    background: linear-gradient(135deg, #0074ff, #fbfbfb);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+
 .container{
     display: flex;
     flex-direction: column;
     margin: auto;
-    margin-top: 200px;
     background: rgba(255, 255, 255, 0.30);
     width: 600px;
     padding-bottom: 30px;
