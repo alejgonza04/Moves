@@ -1,35 +1,97 @@
-from flask import Flask, request
-from flask import request\
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from flask_sqlalchemy import SQLAlchemy
-from moves.SQL.Login import *
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from SQL.Login import getDatabaseForAccountTable, testLogin, createAccount
 
 app = Flask(__name__)
-
-@app.route('/api/users', methods=['GET', 'POST'])
-def users():
-    if request.method == 'GET':
-        db = getDatabaseForAccountTable("root", "1qaz@WSX3edc")
-        inputdata = request.args
-        return testLogin(db, inputdata.get("username"), inputdata.get("email"), inputdata.get("username"))
-    elif request.method == 'POST':
-        db = getDatabaseForAccountTable("root", "1qaz@WSX3edc")
-        inputdata = request.args
-        return testLogin(db, inputdata.get("username"), inputdata.get("email"), inputdata.get("username"))
-
+CORS(app)
 
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
 
-@app.route("/signup", methods=["POST", 'OPTIONS'])
+@app.route('/api/users', methods=['GET', 'POST'])
+def users():
+    db = getDatabaseForAccountTable("root", "1qaz@WSX3edc")
+    if db is None:
+        return jsonify({"message": "Database connection failed."}), 500
+
+    if request.method == 'GET':
+        inputdata = request.args
+        username = inputdata.get("username")
+        email = inputdata.get("email")
+        password = inputdata.get("password")
+
+        _, success = testLogin(db, username, email, password)
+        if success:
+            return jsonify({"message": "Login successful!"}), 200
+        else:
+            return jsonify({"message": "Login failed."}), 401
+
+    elif request.method == 'POST':
+        data = request.get_json()
+        username = data.get("username")
+        email = data.get("email")
+        password = data.get("password")
+
+        _, success = createAccount(db, username, email, password)
+        if success:
+            return jsonify({"message": "Account created!"}), 201
+        else:
+            return jsonify({"message": "Account creation failed."}), 400
+
+@app.route("/signup", methods=["POST", "OPTIONS"])
 def signupMethod():
     if request.method == 'OPTIONS':
         return '', 204
-    #Gets all the json data from frontend, used like a map: name["item"]
+
     data = request.get_json()
-    print("Received data:", data["username"], data["password"])
-    return '', 200
+    print("Received data:", data["username"], data["email"], data["password"])
+
+    db = getDatabaseForAccountTable("root", "1qaz@WSX3edc")
+    print(db)
+    if db is None:
+        return jsonify({"message": "Database connection failed."}), 500
+
+    _, success = createAccount(db, data["username"], data["email"], data["password"])
+
+    if success:
+        return jsonify({"message": "Account created!"}), 201
+    else:
+        return jsonify({"message": "Account creation failed."}), 400
+    
+@app.route("/login", methods=["POST", "OPTIONS"])
+def loginMethod():
+    if request.method == 'OPTIONS':
+        return '', 204
+
+    data = request.get_json()
+    print("Login attempt:", data["email"], data["password"])
+
+    db = getDatabaseForAccountTable("root", "1qaz@WSX3edc")
+    if db is None:
+        return jsonify({"message": "Database connection failed."}), 500
+
+    _, success = testLogin(db, data["email"], data["password"])  # ✅ updated call
+
+    if success:
+        return jsonify({"message": "Login successful!"}), 200
+    else:
+        return jsonify({"message": "Invalid login credentials."}), 401
+
+@app.route("/locationmood", methods=["POST", "OPTIONS"])
+def locationMood():
+    if request.method == 'OPTIONS':
+        return '', 204
+
+    data = request.get_json()
+
+    print(data)
+    return jsonify({"message": "Location"}), 200
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
