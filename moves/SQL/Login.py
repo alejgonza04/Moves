@@ -1,32 +1,38 @@
+import mysql
 import mysql.connector
 from mysql.connector import errorcode
 import re
 
 def getDatabaseForAccountTable(usernameinput, passwordinput):
     try:
-        database = mysql.connector.connect(user=usernameinput, password=passwordinput, host='127.0.0.1', database='movesprofile')
-    except mysql.connector.Error as err:
-      if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-        print("Something is wrong with your user name or password")
-      elif err.errno == errorcode.ER_BAD_DB_ERROR:
-        print("Database does not exist")
-      else:
-        print(err)
-    else:
+        database = mysql.connector.connect(
+            user=usernameinput,
+            password=passwordinput,
+            host='127.0.0.1',
+            port=3307,
+            database='movesprofile'
+        )
         print("got cursor")
         return database
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your username or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+        return None  # <-- Add this line!
 
-def testLogin(database, username, email, password):
+def testLogin(database, email, password):
     cursor = database.cursor()
     cursor.execute(
-            'SELECT * FROM account WHERE username = %s \
-            AND email = %s \
-            AND password = AES_ENCRYPT(%s, "temp")', (username, email, password, ))
+        'SELECT * FROM account WHERE email = %s AND password = %s',
+        (email, password,)
+    )
     account = cursor.fetchone()
-    if account:
-        return database, True
-    else:
-        return database, False
+    cursor.close()
+    return database, account is not None
+
 
 def createAccount(database, username, email, password):
     cursor = database.cursor()
