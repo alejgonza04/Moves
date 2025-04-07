@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CloudAI.css';
 
 const moods = [
@@ -13,6 +13,32 @@ const moods = [
 const CloudAI = () => {
   const [selectedMood, setSelectedMood] = useState(null);
   const [customMood, setCustomMood] = useState("");
+
+  //When page loads gets user's current location
+  useEffect(()=>{
+    let coordinates;
+    navigator.geolocation.getCurrentPosition((position)=>{
+      coordinates = JSON.stringify({longitude: position.coords.longitude, latitude: position.coords.latitude});
+      console.log(coordinates);
+      try
+      {
+        fetch("http://127.0.0.1:5555/locationmood", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: coordinates
+        });
+      }
+      catch(e)
+      {
+        console.log(e);
+      }
+    });
+    
+    
+  },[])
 
   const handleMoodClick = (mood) => {
     setSelectedMood(mood.label);

@@ -82,6 +82,15 @@ def loginMethod():
     else:
         return jsonify({"message": "Invalid login credentials."}), 401
 
+@app.route("/locationmood", methods=["POST", "OPTIONS"])
+def locationMood():
+    if request.method == 'OPTIONS':
+        return '', 204
+
+    data = request.get_json()
+
+    print(data)
+    return jsonify({"message": "Location"}), 200
 
 
 if __name__ == '__main__':
