@@ -81,6 +81,69 @@ def recommend(business_name, city=None, rating_threshold = 3.0):
       return
     seen.add(business_id)
 
+def recommend_google(business_name, city=None, rating_threshold = 3.0):
+  try:
+    index = businesses[businesses['name'] == business_name].index[0]
+    tag_vector = vector[index].reshape(1, -1)
+  except IndexError:
+      print(f"Business '{business_name}' not found in the dataset.")
+      try:
+          google_business = fetch_google_business(business_name, city)
+          tag = build_google_tag(google_business)
+          tag_vector = cv.transform([tag]).toarray()
+          use_custom_vector = True
+      except Exception as e:
+          print(f"Error fetching Google business: {e}")
+          return
+      
+  if use_custom_vector:
+      similiraties = cosine_similarity(tag_vector, vector)[0]
+  else:
+      similarity_scores = similarity[index]      
+
+  
+  # calculate similarity
+  distance = list(enumerate(similarity[index]))
+ 
+  # sort similarity from highest to lowest
+  distance = sorted(distance, reverse=True, key=lambda x: x[1])
+  print(f"Top recommendations similar to {business_name}")
+
+  # count = 0
+  seen = set()
+  for i in distance:
+    business = businesses.iloc[i[0]]
+    business_id = i[0]
+
+    if business['name'] == business_name:
+      continue
+
+    if city and business['city'].lower() != city.lower():
+            continue
+
+    # if it does not meet threshold, skip
+    if business['stars'] < rating_threshold:
+      # print(f"{business['name']} (Rating: {business['stars']}), (Category: {business['categories']}), (City: {business['city']})\n")
+      # count += 1
+      continue
+
+    # if business was already swiped on, skip it
+    if business_id in seen:
+            continue
+
+    #if count == 5:
+      #break
+
+    # matching mechanic
+    print(f"How is this place?")
+    print(f"{business['name']} (Rating: {business['stars']}), (Category: {business['categories']}), (City: {business['city']})\n")
+    swipe = input("Enter 1 for Right, 0 for Left: ")
+
+    if swipe == "1":
+      print("Matched!")
+      return
+    seen.add(business_id)
+
 recommend('Biscuits Cafe', city='Tampa')
 
 joblib.dump((businesses, cv, similarity), 'recommender_model.joblib', compress=3)
