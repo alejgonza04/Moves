@@ -56,3 +56,29 @@ if check:
     print("login success")
 else:
     print("login failure")
+
+cnx, check = updateFavorite(cnx, "ab@caba.com", "should appear")
+if check:
+    print("favorite success")
+else:
+    print("favorite failure")
+
+cnx, check = updateFavorite(cnx, "ab@caba.com", "should not appear")
+if check:
+    print("favorite success")
+else:
+    print("favorite failure")
+
+cnx, check = deleteFavorite(cnx, "ab@caba.com", "should not appear")
+if check:
+    print("delete favorite success")
+else:
+    print("delete favorite failure")
+
+cnx, output, check = getFavorites(cnx, "ab@caba.com")
+if check:
+    print("favorites list:")
+    for favorite in output:
+        print(favorite)
+else:
+    print("failed to get favorites list")
