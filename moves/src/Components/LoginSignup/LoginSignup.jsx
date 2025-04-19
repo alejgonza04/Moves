@@ -9,41 +9,53 @@ const LoginSignup = ({ onLoginSuccess = () => {} }) => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async () => {
-    const endpoint = action === "Sign Up" ? "signup" : "login";
-
+    // Simulated login for development without backend
     console.log(`${action} attempt:`, {
       username: name,
       email: email,
       password: password
     });
-
-    try {
-      const res = await fetch(`http://127.0.0.1:5555/${endpoint}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username: name,
-          email: email,
-          password: password
-        })
-      });
-
-      const data = await res.json();
-      console.log(`${action} response:`, data.message);
-
-      if (res.ok) {
-        alert(data.message);
-        onLoginSuccess(); // call the prop function on success
-      } else {
-        alert(`${action} failed: ${data.message}`);
-      }
-    } catch (err) {
-      console.error(`${action} request failed:`, err);
-      alert(`${action} failed. Please try again.`);
-    }
+  
+    alert(`${action} successful! (Simulated)`);
+    onLoginSuccess(); 
   };
+
+  // const handleSubmit = async () => {
+  //   const endpoint = action === "Sign Up" ? "signup" : "login";
+
+  //   console.log(`${action} attempt:`, {
+  //     username: name,
+  //     email: email,
+  //     password: password
+  //   });
+
+  //   try {
+  //     const res = await fetch(`http://127.0.0.1:5555/${endpoint}`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({
+  //         username: name,
+  //         email: email,
+  //         password: password
+  //       })
+  //     });
+
+  //     const data = await res.json();
+  //     console.log(`${action} response:`, data.message);
+
+  //     if (res.ok) {
+  //       alert(data.message);
+  //       onLoginSuccess(); // call the prop function on success
+  //     } else {
+  //       alert(`${action} failed: ${data.message}`);
+  //     }
+  //   } catch (err) {
+  //     console.error(`${action} request failed:`, err);
+  //     alert(`${action} failed. Please try again.`);
+  //   }
+  // };
 
   return (
     <div className='container'>

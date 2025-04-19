@@ -1,8 +1,17 @@
+.login-page-background {
+    background: linear-gradient(135deg, #0074ff, #fbfbfb);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+  }
+  
+
 .container{
     display: flex;
     flex-direction: column;
     margin: auto;
-    margin-top: 200px;
     background: rgba(255, 255, 255, 0.30);
     width: 600px;
     padding-bottom: 30px;
@@ -66,7 +75,7 @@
 .submit-container{
     display: flex;
     gap: 30px;
-    margin: 60px auto;
+    margin: 30px auto;
 }
 
 .submit{
